@@ -1,0 +1,9 @@
+@import '_second';
+
+.testing {
+	width: percentage(5/7);
+}
+
+.example {
+	transform: rotate(30deg);
+}
