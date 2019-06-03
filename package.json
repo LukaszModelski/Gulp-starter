@@ -1,12 +1,12 @@
 {
-  "name": "czapa-template",
+  "name": "lukasz-modelski-gulp-starter",
   "version": "1.0.0",
-  "description": "czapa template",
+  "description": "Lukasz Modelski Gulp starter",
   "main": "gulpfile.js",
   "scripts": {
     "test": "test"
   },
-  "author": "Czapa",
+  "author": "Lukasz Modelski",
   "license": "ISC",
   "devDependencies": {
     "browser-sync": "^2.18.8",
@@ -15,6 +15,7 @@
     "gulp-concat": "^2.6.1",
     "gulp-cssnano": "^2.1.2",
     "gulp-imagemin": "^3.2.0",
+    "gulp-plumber": "^1.2.1",
     "gulp-sass": "^3.1.0",
     "gulp-uglify": "^3.0.0",
     "gulp-useref": "^3.1.2"

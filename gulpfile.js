@@ -8,6 +8,7 @@ var gulpIf = require('gulp-if');
 var uglify = require('gulp-uglify');
 var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
+var plumber = require('gulp-plumber');
 
 // ------------------------------------------------- //
 // --------- Server and watching for changes --------//
@@ -28,16 +29,17 @@ gulp.task('htmlServer', function() {
    }));;
 });
 
-gulp.task('stylesServer', function() {
+gulp.task('scssToCssAndMin', function() {
    gulp.src(['src/styles/scss/*.scss'])
-   .pipe(sass())
+   .pipe(plumber())
+   .pipe(sass({includePaths: ['./styles/scss']}))
    .pipe(gulp.dest('src/styles/css/'))
    .pipe(browserSync.reload({
       stream: true
    }));
 });
 
-gulp.task('jsServer', function() {
+gulp.task('jsCombineAndMin', function() {
     gulp.src(['src/scripts/*.js'])
   	.pipe(browserSync.reload({
       stream: true
@@ -46,10 +48,10 @@ gulp.task('jsServer', function() {
 
 // --------- wrapped together --------- //
 
-gulp.task('serve', ['browserSync','htmlServer','stylesServer','jsServer'], function() {
-	gulp.watch('src/styles/scss/*.scss',['stylesServer']);
+gulp.task('serve', ['browserSync','htmlServer','scssToCssAndMin','jsCombineAndMin'], function() {
+	gulp.watch('src/styles/scss/*.scss',['scssToCssAndMin']);
 	gulp.watch('src/*.+(html|ico)',['htmlServer']);
-	gulp.watch('src/scripts/*.js',['jsServer']);
+	gulp.watch('src/scripts/*.js',['jsCombineAndMin']);
 });
 
 // ------------------------------------------------- //
@@ -69,6 +71,11 @@ gulp.task('fontsDist', function() {
    .pipe(gulp.dest('dist/fonts/'));
 });
 
+gulp.task('vendorDist', function() {
+    gulp.src('src/vendor/*')
+    .pipe(gulp.dest('dist/vendor/'));
+ });
+ 
 gulp.task('useref', function() {
     gulp.src('src/*.html')
     .pipe(useref())
@@ -80,7 +87,7 @@ gulp.task('useref', function() {
 
 // --------- wrapped together --------- //
 
-gulp.task('dist', ['useref','imageDist','fontsDist'], function() {
+gulp.task('dist', ['useref','vendorDist','imageDist','fontsDist'], function() {
 
 });
 
