@@ -1,1 +1,0 @@
-alert('test from main.js');
